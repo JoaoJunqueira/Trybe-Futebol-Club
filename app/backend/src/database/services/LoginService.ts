@@ -9,8 +9,10 @@ export default class LoginService {
   login = async (email: string, password: string) => {
     if (email === '') return { status: 400, message: 'All fields must be filled' } as IMessage;
     if (password === '') return { status: 400, message: 'All fields must be filled' } as IMessage;
-    const user = User.findAll({ where: { email } });
-    console.log(user);
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return { status: 401, message: 'Incorrect email or password' } as IMessage;
+    }
     const token = this.generateToken(email, password);
     return { status: 200, token } as IMessage;
   };
