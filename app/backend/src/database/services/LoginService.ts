@@ -29,7 +29,7 @@ export default class LoginService {
 
   generateToken = (email: string, password: string) => {
     const payload = { email, password };
-    const token = sign(payload, 'senha');
+    const token = sign(payload, 'jwt_secret');
     return token;
   };
 }
