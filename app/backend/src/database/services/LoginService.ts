@@ -1,8 +1,6 @@
 import { sign } from 'jsonwebtoken';
 import bcrypt = require('bcryptjs');
 import IMessage from '../interfaces/IMessage';
-// import IUser from '../interfaces/IUser';
-// import IToken from '../interfaces/IToken';
 import User from '../models/UserModel';
 
 export default class LoginService {
