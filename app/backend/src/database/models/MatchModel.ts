@@ -1,6 +1,7 @@
 import { Model, INTEGER, BOOLEAN } from 'sequelize';
 import db from '.';
 // import OtherModel from './OtherModel';
+// import Team from './TeamModel';
 
 class Match extends Model {
   // declare <campo>: <tipo>;
@@ -42,5 +43,11 @@ Match.init({
   modelName: 'matches',
   timestamps: false,
 });
+
+// OtherModel.belongsTo(Example, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
+// OtherModel.belongsTo(Example, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
+
+// Match.belongsTo(Team, { foreignKey: 'id', as: 'teamName' });
+// Match.belongsTo(Team, { foreignKey: 'id', as: 'teamName' });
 
 export default Match;
