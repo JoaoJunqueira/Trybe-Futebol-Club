@@ -12,6 +12,7 @@ const Routes = (app: App) => {
   app.get('/teams/:id', teamController.getById);
 
   const matchController = new MatchController();
+  // app.get('/matches?inProgress=true', matchController.inProgressMatches);
   app.get('/matches', matchController.get);
 };
 
