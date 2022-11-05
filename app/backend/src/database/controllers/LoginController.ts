@@ -16,4 +16,11 @@ export default class LoginController {
     }
     return res.status(loginResponse.status).json({ message: loginResponse.message });
   };
+
+  validation = async (req: Request, res: Response) => {
+    const { authorization } = req.headers;
+    const role = await this.service.validation(authorization);
+    // console.log(role);
+    return res.status(200).json({ role });
+  };
 }
