@@ -1,4 +1,5 @@
 import { ParsedQs } from 'qs';
+import IMessage from '../interfaces/IMessage';
 import Match from '../models/MatchModel';
 import Team from '../models/TeamModel';
 // import IMatches from '../interfaces/IMatches';
@@ -29,5 +30,14 @@ export default class MatchService {
     const matches = await this.get();
     const filteredMatches = matches.filter((match) => match.inProgress === boolValue);
     return filteredMatches;
+  };
+
+  // post = async (homeTeam: number, awayTeam: number): Promise<IMessage> => {
+  post = (homeTeam: number, awayTeam: number): IMessage => {
+  // const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+    if (homeTeam === awayTeam) {
+      return { status: 422, message: 'It is not possible to create a match with two equal teams' };
+    }
+    return { status: 422, message: 'It is not possible to create a match with two equal teams' };
   };
 }

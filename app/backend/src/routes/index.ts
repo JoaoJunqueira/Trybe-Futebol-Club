@@ -1,4 +1,5 @@
 import { Application as App } from 'express';
+import Token from '../database/auth/Token';
 import TeamController from '../database/controllers/TeamController';
 import LoginController from '../database/controllers/LoginController';
 import MatchController from '../database/controllers/MatchController';
@@ -13,7 +14,9 @@ const Routes = (app: App) => {
   app.get('/teams/:id', teamController.getById);
 
   const matchController = new MatchController();
+  const token = new Token();
   app.get('/matches', matchController.get);
+  app.post('/matches', token.validation, matchController.postMatch);
 };
 
 export default Routes;

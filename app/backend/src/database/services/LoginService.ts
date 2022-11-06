@@ -29,7 +29,6 @@ export default class LoginService {
     if (typeof authorization === 'string') {
       const decoded = verify(authorization, 'jwt_secret') as JwtPayload;
       const user = await User.findAll({ where: { email: decoded.email } });
-      // console.log(user);
       return user[0].role;
     }
   };
