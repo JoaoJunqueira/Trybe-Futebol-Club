@@ -34,11 +34,30 @@ export default class MatchService {
     return filteredMatches;
   };
 
+  existTeam = async (req: Request): Promise<boolean> => {
+    const { homeTeam, awayTeam } = req.body;
+    const teamOne = await Team.findAll({
+      where: {
+        id: Number(homeTeam),
+      },
+    });
+    const teamTwo = await Team.findAll({
+      where: {
+        id: Number(awayTeam),
+      },
+    });
+    if (teamOne.length === 0 || teamTwo.length === 0) return false;
+    return true;
+  };
+
   // post = async (homeTeam: number, awayTeam: number): Promise<IMessage> => {
   post = async (req: Request): Promise<IMessage> => {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
     if (homeTeam === awayTeam) {
       return { status: 422, message: 'It is not possible to create a match with two equal teams' };
+    }
+    if (!(await this.existTeam(req))) {
+      return { status: 404, message: 'There is no team with such id!' };
     }
     const newMatch = await Match.create(
       { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true },
@@ -54,6 +73,6 @@ export default class MatchService {
         id,
       },
     });
-    return { status: 201, message: 'Finished' };
+    return { status: 200, message: 'Finished' };
   };
 }

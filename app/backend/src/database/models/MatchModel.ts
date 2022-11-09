@@ -15,12 +15,12 @@ class Match extends Model {
 
 Match.init({
   // ... Campos
-  id: {
-    type: INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true,
-  },
+  // id: {
+  //   type: INTEGER,
+  //   allowNull: false,
+  //   primaryKey: true,
+  //   autoIncrement: true,
+  // },
   homeTeam: {
     type: INTEGER,
   },
@@ -40,7 +40,7 @@ Match.init({
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  tableName: 'matches',
+  modelName: 'matches',
   timestamps: false,
 });
 

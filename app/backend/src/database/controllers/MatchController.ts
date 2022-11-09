@@ -27,7 +27,10 @@ export default class MatchController {
 
   postMatch = async (req: Request, res: Response) => {
     const postResponse = await this.service.post(req);
-    return res.status(201).json(postResponse.match);
+    if (postResponse.message !== undefined) {
+      return res.status(postResponse.status).json({ message: postResponse.message });
+    }
+    return res.status(postResponse.status).json(postResponse.match);
   };
 
   postPatch = async (req: Request, res: Response) => {
