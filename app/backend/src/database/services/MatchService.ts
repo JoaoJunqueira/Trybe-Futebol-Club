@@ -1,4 +1,6 @@
+import { Request } from 'express';
 import { ParsedQs } from 'qs';
+// import IMatch from '../interfaces/IMatch';
 import IMessage from '../interfaces/IMessage';
 import Match from '../models/MatchModel';
 import Team from '../models/TeamModel';
@@ -23,7 +25,7 @@ export default class MatchService {
     }] },
   );
 
-  getInProgress = async (inProgress: string | ParsedQs | string[] | ParsedQs[]) => {
+  getInProgress = async (inProgress: string | string[] | ParsedQs | ParsedQs[]) => {
     let boolValue: boolean;
     if (inProgress === 'true') boolValue = true;
     if (inProgress === 'false') boolValue = false;
@@ -33,11 +35,25 @@ export default class MatchService {
   };
 
   // post = async (homeTeam: number, awayTeam: number): Promise<IMessage> => {
-  post = (homeTeam: number, awayTeam: number): IMessage => {
-  // const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+  post = async (req: Request): Promise<IMessage> => {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
     if (homeTeam === awayTeam) {
       return { status: 422, message: 'It is not possible to create a match with two equal teams' };
     }
-    return { status: 422, message: 'It is not possible to create a match with two equal teams' };
+    const newMatch = await Match.create(
+      { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true },
+    );
+    return { status: 201, match: newMatch };
+  };
+
+  patch = async (id: number): Promise<IMessage> => {
+    await Match.update({
+      inProgress: false,
+    }, {
+      where: {
+        id,
+      },
+    });
+    return { status: 201, message: 'Finished' };
   };
 }

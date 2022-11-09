@@ -13,6 +13,7 @@ export default class Token {
       if (authorization === undefined) return res.status(401).json({ message: 'Token not found' });
       const decoded = verify(authorization, 'jwt_secret') as JwtPayload;
       const user = await User.findAll({ where: { email: decoded.email } });
+      console.log(user);
       if (user.length === 0) {
         return res.status(401).json({ message: 'Token must be a valid token' });
       }

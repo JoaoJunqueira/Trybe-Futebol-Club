@@ -22,13 +22,17 @@ export default class MatchController {
       return res.status(200).json(filteredMatches);
     }
     const matches = await this.service.get();
-    console.log('Nao foi');
     return res.status(200).json(matches);
   };
 
   postMatch = async (req: Request, res: Response) => {
-    const { homeTeam, awayTeam } = req.body;
-    const postResponse = this.service.post(homeTeam, awayTeam);
-    return res.status(postResponse.status).json({ message: postResponse.message });
+    const postResponse = await this.service.post(req);
+    return res.status(201).json(postResponse.match);
+  };
+
+  postPatch = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const patchResponse = await this.service.patch(Number(id));
+    return res.status(patchResponse.status).json({ message: patchResponse.message });
   };
 }
