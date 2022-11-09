@@ -17,6 +17,7 @@ const Routes = (app: App) => {
   const token = new Token();
   app.get('/matches', matchController.get);
   app.post('/matches', token.validation, matchController.postMatch);
+  app.patch('/matches/:id', token.validation, matchController.alterScore);
   app.patch('/matches/:id/finish', token.validation, matchController.postPatch);
 };
 

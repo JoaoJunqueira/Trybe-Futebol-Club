@@ -38,4 +38,12 @@ export default class MatchController {
     const patchResponse = await this.service.patch(Number(id));
     return res.status(patchResponse.status).json({ message: patchResponse.message });
   };
+
+  alterScore = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const patchResponse = await this
+      .service.alterScore(Number(id), Number(homeTeamGoals), Number(awayTeamGoals));
+    return res.status(patchResponse.status).json({ message: patchResponse.message });
+  };
 }

@@ -75,4 +75,16 @@ export default class MatchService {
     });
     return { status: 200, message: 'Finished' };
   };
+
+  alterScore = async (id: number, homeTeamGoals: number, awayTeamGoals: number) => {
+    await Match.update({
+      homeTeamGoals,
+      awayTeamGoals,
+    }, {
+      where: {
+        id,
+      },
+    });
+    return { status: 200, message: 'Score altered' };
+  };
 }
