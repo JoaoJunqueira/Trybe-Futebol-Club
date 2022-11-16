@@ -1,4 +1,5 @@
-import { JwtPayload, sign, verify } from 'jsonwebtoken';
+// import { JwtPayload, sign, verify } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import bcrypt = require('bcryptjs');
 import IMessage from '../interfaces/IMessage';
 import User from '../models/UserModel';
@@ -27,7 +28,7 @@ export default class LoginService {
 
   validation = async (authorization: string | undefined) => {
     if (typeof authorization === 'string') {
-      const decoded = verify(authorization, 'jwt_secret') as JwtPayload;
+      const decoded = jwt.verify(authorization, 'jwt_secret') as jwt.JwtPayload;
       const user = await User.findAll({ where: { email: decoded.email } });
       return user[0].role;
     }
@@ -35,7 +36,7 @@ export default class LoginService {
 
   generateToken = (email: string, password: string) => {
     const payload = { email, password };
-    const token = sign(payload, 'jwt_secret');
+    const token = jwt.sign(payload, 'jwt_secret');
     return token;
   };
 }

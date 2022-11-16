@@ -3,6 +3,7 @@ import Token from '../database/auth/Token';
 import TeamController from '../database/controllers/TeamController';
 import LoginController from '../database/controllers/LoginController';
 import MatchController from '../database/controllers/MatchController';
+import LeaderboardController from '../database/controllers/LeaderboardController';
 
 const Routes = (app: App) => {
   const loginController = new LoginController();
@@ -19,6 +20,9 @@ const Routes = (app: App) => {
   app.post('/matches', token.validation, matchController.postMatch);
   app.patch('/matches/:id', token.validation, matchController.alterScore);
   app.patch('/matches/:id/finish', token.validation, matchController.postPatch);
+
+  const leaderboardController = new LeaderboardController();
+  app.get('/leaderboard', leaderboardController.getTeams);
 };
 
 export default Routes;

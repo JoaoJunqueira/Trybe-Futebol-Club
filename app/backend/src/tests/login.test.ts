@@ -1,5 +1,6 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
+// import jwt from 'jsonwebtoken';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
@@ -7,15 +8,15 @@ import { app } from '../app';
 // import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
-import { Model } from 'sequelize/types';
-import IUser from '../database/interfaces/IUser';
+import User from '../database/models/UserModel';
+// import IUser from '../database/interfaces/IUser';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Testando a rota de login', () => {
-  describe('Quando o usuário já está cadastrado', () => {
+describe('Testando as models', () => {
+  describe('Quando o usuário não está cadastrado', () => {
     const user = {
       email: 'string',
       password: 'string',
@@ -23,17 +24,19 @@ describe('Testando a rota de login', () => {
       username: 'string',
       role: 'string',
     }
-    beforeAll(() => sinon.stub(Model, 'findAll')).resolves([user] as IUser[])
-    afterAll(() => sinon.restore())
-    it('deve retornar um status 200', async () => {
-      const httpResponse = await chai
+    let chaiHttpResponse: Response;
+    beforeEach(() => sinon.stub(User, 'findAll').resolves([user] as User[]))
+    afterEach(() => sinon.restore())
+    it('deve retornar um status 401', async () => {
+      const chaiHttpResponse = await chai
       .request(app)
       .post('/login')
       .send({
         email: 'string',
         password: 'string',
       })
-      expect(httpResponse.status).to.equal(200)
+      expect(chaiHttpResponse.status).to.equal(401)
+      expect(chaiHttpResponse.body).to.deep.equal({ message: 'Incorrect email or password' })
     })
   })
 });
