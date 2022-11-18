@@ -6,14 +6,9 @@ import * as bcrypt from 'bcryptjs';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-// import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
 import User from '../database/models/UserModel';
-import LoginController from '../database/controllers/LoginController';
-import LoginService from '../database/services/LoginService';
-import IMessage from '../database/interfaces/IMessage';
-// import IUser from '../database/interfaces/IUser';
 
 chai.use(chaiHttp);
 
