@@ -101,3 +101,50 @@ describe('Testando /login/validate get', () => {
     })
   })
 });
+describe('Testando /login post', () => {
+  describe('Quando falta o email', () => {
+    const payload = {
+      email: '',
+      password: 'secret_admin',
+    }
+    it('Deve retornar status 400', async () => {
+      const chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send(payload)
+      expect(chaiHttpResponse.status).to.equal(400)
+    })
+  })
+});
+describe('Testando /login post', () => {
+  describe('Quando falta o email', () => {
+    const payload = {
+      email: 'admin@admin.com',
+      password: '',
+    }
+    it('Deve retornar status 400', async () => {
+      const chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send(payload)
+      expect(chaiHttpResponse.status).to.equal(400)
+    })
+  })
+});
+describe('Testando /login post', () => {
+  describe('Quando o email não está no banco', () => {
+    const payload = {
+      email: 'admin@adin.com',
+      password: 'secret_admin',
+    }
+    beforeEach(() => sinon.stub(User, 'findAll').resolves([]))
+    afterEach(() => sinon.restore())
+    it('Deve retornar status 401', async () => {
+      const chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send(payload)
+      expect(chaiHttpResponse.status).to.equal(401)
+    })
+  })
+});
