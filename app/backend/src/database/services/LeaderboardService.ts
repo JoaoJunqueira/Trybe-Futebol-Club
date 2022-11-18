@@ -1,9 +1,14 @@
 import ITeam from '../interfaces/ITeam';
 import Match from '../models/MatchModel';
 import Team from '../models/TeamModel';
+import MatchService from './MatchService';
 
 export default class LeaderboardService {
-  constructor(readonly teamModel = new Team(), readonly matchModel = new Match()) {}
+  constructor(
+    readonly teamModel = new Team(),
+    readonly matchModel = new Match(),
+    readonly matchService = new MatchService(),
+  ) {}
 
   createBoard = async () => {
     const teams = await Team.findAll();
@@ -42,22 +47,22 @@ export default class LeaderboardService {
     return team;
   };
 
-  generalBoardCalculator = async (team: ITeam, index: number) => {
-    const matches = await Match.findAll();
+  generalBoardCalculator = async (team: ITeam) => {
+    // const matches = await Match.findAll();
     const newTeam = this.createTeam();
     newTeam.name = team.name;
-    matches.forEach((match) => {
-      if (index === Number(match.awayTeam) || index === Number(match.homeTeam)) {
-        newTeam.
-      }
-    });
+    // matches.forEach((match) => {
+    //   if (index === Number(match.awayTeam) || index === Number(match.homeTeam)) {
+    //     newTeam.
+    //   }
+    // });
     return newTeam;
   };
 
   generalBoard = async () => {
     const board = await this.createBoard();
-    const newBoard = await Promise.all(board.map(async (team, index) => {
-      const newTeam = await this.generalBoardCalculator(team, index);
+    const newBoard = await Promise.all(board.map(async (team) => {
+      const newTeam = await this.generalBoardCalculator(team);
       return newTeam;
     }));
     console.log(newBoard);
