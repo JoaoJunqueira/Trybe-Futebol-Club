@@ -42,20 +42,22 @@ export default class LeaderboardService {
     return team;
   };
 
-  generalBoardCalculator = async (team: ITeam) => {
-    // const matches = await Match.findAll();
+  generalBoardCalculator = async (team: ITeam, index: number) => {
+    const matches = await Match.findAll();
     const newTeam = this.createTeam();
     newTeam.name = team.name;
-    // matches.forEach((match) => {
-
-    // });
+    matches.forEach((match) => {
+      if (index === Number(match.awayTeam) || index === Number(match.homeTeam)) {
+        newTeam.
+      }
+    });
     return newTeam;
   };
 
   generalBoard = async () => {
     const board = await this.createBoard();
-    const newBoard = await Promise.all(board.map(async (team) => {
-      const newTeam = await this.generalBoardCalculator(team);
+    const newBoard = await Promise.all(board.map(async (team, index) => {
+      const newTeam = await this.generalBoardCalculator(team, index);
       return newTeam;
     }));
     console.log(newBoard);
