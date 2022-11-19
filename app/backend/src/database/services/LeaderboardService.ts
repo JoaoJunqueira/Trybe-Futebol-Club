@@ -12,22 +12,16 @@ export default class LeaderboardService {
   ) {}
 
   sortTeams = (teamA: any, teamB: any) => {
-    if (teamA.totalVictories > teamB.totalVictories) {
-      return -1;
-    }
-    if (teamA.totalVictories < teamB.totalVictories) {
-      return 1;
-    }
-    if (teamA.goalsBalance > teamB.goalsBalance) {
-      return -1;
-    }
-    if (teamA.goalsFavor > teamB.goalsFavor) {
-      return -1;
-    }
-    if (teamA.goalsOwn > teamB.goalsOwn) {
-      return 1;
-    }
-    // a must be equal to b
+    if (teamA.totalPoints > teamB.totalPoints) return -1;
+    if (teamA.totalPoints < teamB.totalPoints) return 1;
+    if (teamA.totalVictories > teamB.totalVictories) return -1;
+    if (teamA.totalVictories < teamB.totalVictories) return 1;
+    if (teamA.goalsBalance > teamB.goalsBalance) return -1;
+    if (teamA.goalsBalance < teamB.goalsBalance) return 1;
+    if (teamA.goalsFavor > teamB.goalsFavor) return -1;
+    if (teamA.goalsFavor < teamB.goalsFavor) return 1;
+    if (teamA.goalsOwn > teamB.goalsOwn) return -1;
+    if (teamA.goalsOwn > teamB.goalsOwn) return 1;
     return 0;
   };
 
