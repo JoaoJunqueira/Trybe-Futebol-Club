@@ -22,7 +22,8 @@ const Routes = (app: App) => {
   app.patch('/matches/:id/finish', token.validation, matchController.postPatch);
 
   const leaderboardController = new LeaderboardController();
-  app.get('/leaderboard', leaderboardController.getTeams);
+  app.get('/leaderboard/home', leaderboardController.getHomeTeams);
+  app.get('/leaderboard/away', leaderboardController.getAwayTeams);
 };
 
 export default Routes;
