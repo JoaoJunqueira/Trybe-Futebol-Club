@@ -10,6 +10,7 @@ import { app } from '../app';
 import { Response } from 'superagent';
 import Match from '../database/models/MatchModel';
 import IMatch from '../database/interfaces/IMatch';
+import Team from '../database/models/TeamModel';
 
 chai.use(chaiHttp);
 
@@ -104,18 +105,38 @@ describe('Testando /match get', () => {
       })
     })
   });
-  describe('Testando /matches?inProgress=false get', () => {
-    describe('Caso normal em que', () => {
-      beforeEach(() => {
-        sinon.stub(Match, 'findAll').resolves(matchesFinished as [])
-      })
-      afterEach(() => sinon.restore())
-      it('Deve retornar os matches', async () => {
-        const chaiHttpResponse = await chai
-        .request(app)
-        .get('/matches?inProgress=false')
-        .send()
-        expect(chaiHttpResponse.body).to.deep.equal(matchesFinished)
-      })
+describe('Testando /matches?inProgress=false get', () => {
+  describe('Caso normal em que', () => {
+    beforeEach(() => {
+      sinon.stub(Match, 'findAll').resolves(matchesFinished as [])
     })
-  });
+    afterEach(() => sinon.restore())
+    it('Deve retornar os matches', async () => {
+      const chaiHttpResponse = await chai
+      .request(app)
+      .get('/matches?inProgress=false')
+      .send()
+      expect(chaiHttpResponse.body).to.deep.equal(matchesFinished)
+    })
+  })
+});
+// describe('Testando /matches post', () => {
+//   describe('Quando os times são iguais', () => {
+//     // beforeEach(() => {
+//     //   sinon.stub(Match, 'findAll').resolves(matchesFinished as [])
+//     // })
+//     // afterEach(() => sinon.restore())
+//     it('Deve retornar status 422', async () => {
+//       const chaiHttpResponse = await chai
+//       .request(app)
+//       .post('/matches')
+//       .send({
+//         homeTeam: 8, 
+//         awayTeam: 8, 
+//         homeTeamGoals: 2,
+//         awayTeamGoals: 2,
+//       })
+//       expect(chaiHttpResponse.body).to.deep.equal({ message: 'It is not possible to create a match with two equal teams' })
+//     })
+//   })
+// });
