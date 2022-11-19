@@ -1,5 +1,3 @@
-// import ITeam from '../interfaces/ITeam';
-// import Model from '../models/index';
 import Match from '../models/MatchModel';
 import Team from '../models/TeamModel';
 import MatchService from './MatchService';
